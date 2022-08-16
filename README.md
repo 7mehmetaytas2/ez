@@ -1,14 +1,24 @@
+import random
+print("Şifre hangilerini içersin ?:")
+print("1. Sadece Küçük Harf")
+print("2. Küçük ve Büyük Harf")
+print("3. Küçük-Büyük Harf ve Rakam")
+print("4. Küçük-Büyük Harf, Rakam ve Özel Karakterler")
+option = int(input("Seçenek : "))
+length = int(input("Şifre uzunluğu: "))
 
-import subprocess
-data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles'], shell=True).decode('utf-8').split('\n')
+option1 = "abcdefghijklmnopqrstuvwxyz"
+option2 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+option3 = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+option4 = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()?"
 
-profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
+if(option == 1):
+    password =  "".join(random.sample(option1,length ))
+elif(option == 2):
+    password =  "".join(random.sample(option2,length ))
+elif(option == 3):
+    password =  "".join(random.sample(option3,length ))
+elif(option == 4):
+    password =  "".join(random.sample(option4,length ))
 
-
-for i in profiles:
-    results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
-    results = [b.split(":")[1][1:-1] for b in results if "Key Content" in b]
-    try:
-        print("{:<30}| {:<}".format(i, results[0]))
-    except IndexError:
-        print("{:<30}| {:<}".format(i, ""))
+print ("Şifreniz: {0}".format(password))
